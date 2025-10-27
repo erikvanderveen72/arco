@@ -3,19 +3,794 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hello world – arco</title>
+  <title>ChatGPT Expert – Slimme AI-oplossingen voor jouw organisatie</title>
+  <meta name="description" content="ChatGPT Expert bouwt op maat gemaakte AI-oplossingen, automatiseringen en trainingsprogramma's waarmee jouw organisatie sneller groeit." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    html,body{height:100%;margin:0}
-    body{
-      background:#0b5bd3; /* blauw */
-      color:#fff;          /* witte tekst */
-      display:grid; place-items:center;
-      font:700 3rem/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      text-align:center;
+    :root {
+      color-scheme: light dark;
+      --color-dark: #0c1636;
+      --color-light: #f9fbff;
+      --color-primary: #4356ff;
+      --color-secondary: #00d1b2;
+      --color-text: #1a1f36;
+      --color-muted: #5f6c94;
+      --color-border: rgba(15, 23, 42, 0.12);
+      --shadow-lg: 0 20px 45px rgba(12, 22, 54, 0.18);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      font-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--color-text);
+      background: radial-gradient(circle at top left, #e9f0ff, #ffffff 40%, #eef3ff 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(67, 86, 255, 0.12), rgba(0, 209, 178, 0.08));
+      z-index: -1;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(249, 251, 255, 0.88);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-dark);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .logo span {
+      display: inline-block;
+      padding: 0.35rem 0.55rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 30px rgba(67, 86, 255, 0.3);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.75rem;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--color-muted);
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      color: var(--color-dark);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--color-dark);
+      color: white;
+      padding: 0.65rem 1.2rem;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 14px 28px rgba(12, 22, 54, 0.25);
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: var(--color-primary);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+      gap: 3rem;
+      padding: 6rem 0 4rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 3.8rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      color: var(--color-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--color-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      border-radius: 999px;
+      padding: 0.9rem 1.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-primary), #6d7aff);
+      color: white;
+      box-shadow: 0 20px 35px rgba(67, 86, 255, 0.35);
+    }
+
+    .btn-secondary {
+      color: var(--color-primary);
+      background: rgba(67, 86, 255, 0.14);
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 26px 45px rgba(12, 22, 54, 0.18);
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(67, 86, 255, 0.1), rgba(0, 209, 178, 0.25));
+      filter: blur(0px);
+    }
+
+    .hero-card::before {
+      width: 220px;
+      height: 220px;
+      top: -70px;
+      right: -60px;
+    }
+
+    .hero-card::after {
+      width: 180px;
+      height: 180px;
+      bottom: -60px;
+      left: -50px;
+    }
+
+    .hero-card h2 {
+      font-size: 1.4rem;
+      color: var(--color-dark);
+      margin-bottom: 1rem;
+    }
+
+    .hero-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .hero-card li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--color-muted);
+      font-weight: 500;
+    }
+
+    .hero-card li span {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(67, 86, 255, 0.12);
+      display: grid;
+      place-items: center;
+      color: var(--color-primary);
+      font-size: 1.25rem;
+    }
+
+    section {
+      padding: 4.5rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      color: var(--color-dark);
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title p {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--color-muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .grid-cols-3 {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .grid-cols-2 {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      border: 1px solid rgba(67, 86, 255, 0.08);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 45px rgba(12, 22, 54, 0.18);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--color-dark);
+      font-size: 1.25rem;
+    }
+
+    .card p {
+      color: var(--color-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(0, 209, 178, 0.15);
+      color: var(--color-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .features-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .features-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    .features-list li::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      margin-top: 0.4rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      box-shadow: 0 0 0 4px rgba(67, 86, 255, 0.12);
+    }
+
+    .testimonials {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .testimonial {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: 0 20px 45px rgba(12, 22, 54, 0.1);
+      border: 1px solid rgba(67, 86, 255, 0.1);
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: "\201C";
+      position: absolute;
+      top: -40px;
+      left: 20px;
+      font-size: 6rem;
+      color: rgba(67, 86, 255, 0.15);
+    }
+
+    .testimonial cite {
+      display: block;
+      margin-top: 1.5rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    .cta-band {
+      background: radial-gradient(circle at right, rgba(0, 209, 178, 0.2), rgba(67, 86, 255, 0.2));
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      text-align: center;
+      color: var(--color-dark);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 65px rgba(12, 22, 54, 0.2);
+    }
+
+    .cta-band::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(67, 86, 255, 0.14), rgba(0, 209, 178, 0.16));
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    .cta-band h2 {
+      font-size: 2.1rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-band p {
+      margin-bottom: 2rem;
+      position: relative;
+      color: var(--color-dark);
+    }
+
+    form {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(12, 22, 54, 0.12);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--color-primary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(67, 86, 255, 0.15);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 2.5rem 0 3rem;
+      text-align: center;
+      color: var(--color-muted);
+      font-size: 0.95rem;
+    }
+
+    .floating-badge {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: white;
+      padding: 0.9rem 1.4rem;
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(12, 22, 54, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+    }
+
+    .floating-badge svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .floating-badge:hover {
+      transform: translateY(-4px);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-dark);
+      position: relative;
+    }
+
+    .mobile-toggle span::before,
+    .mobile-toggle span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 22px;
+      height: 2px;
+      background: var(--color-dark);
+      transition: transform 0.2s ease;
+    }
+
+    .mobile-toggle span::before {
+      top: -6px;
+    }
+
+    .mobile-toggle span::after {
+      top: 6px;
+    }
+
+    nav.open ul {
+      display: grid;
+      gap: 1rem;
+      text-align: center;
+      padding: 1rem 0;
+      width: 100%;
+    }
+
+    nav.open .nav-cta {
+      justify-content: center;
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    @media (max-width: 860px) {
+      header {
+        position: sticky;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      nav.open ul {
+        display: grid;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .hero {
+        padding-top: 4rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
-  <main>Hello world 👋</main>
+  <header>
+    <div class="container nav" id="top">
+      <a class="logo" href="#top" aria-label="ChatGPT Expert">
+        <span>GPT</span>
+        ChatGPT Expert
+      </a>
+      <button class="mobile-toggle" aria-expanded="false" aria-label="Open navigatie">
+        <span></span>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="#diensten">Diensten</a></li>
+          <li><a href="#werkwijze">Werkwijze</a></li>
+          <li><a href="#cases">Succesverhalen</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a class="nav-cta" href="#contact">Plan een strategiecall</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container hero">
+      <div class="hero-text hidden">
+        <div class="badge">Premium AI-partner</div>
+        <h1>Van idee naar impact: bouw je AI-toekomst met ChatGPT Expert</h1>
+        <p>Wij helpen ambitieuze teams met het ontwerpen, implementeren en trainen van slimme AI-oplossingen die echt resultaat opleveren. Minder repetitief werk, meer tijd voor strategie.</p>
+        <div class="hero-buttons">
+          <a class="btn-primary" href="#contact">Vraag een gratis consult aan</a>
+          <a class="btn-secondary" href="#diensten">Bekijk de mogelijkheden</a>
+        </div>
+        <p style="margin-top:1.5rem;color:var(--color-muted);font-size:0.95rem;">Trusted door scale-ups, agencies en overheden in de Benelux.</p>
+      </div>
+      <aside class="hero-card hidden" aria-label="Highlights ChatGPT Expert">
+        <h2>Waarom organisaties kiezen voor ons</h2>
+        <ul>
+          <li><span>⚡</span>Snelle implementaties dankzij bewezen frameworks</li>
+          <li><span>🤖</span>Integraties met tools zoals Slack, HubSpot en Notion</li>
+          <li><span>🎓</span>Teamtrainingen en change management begeleiding</li>
+          <li><span>📈</span>Meetbare ROI met dashboards & rapportages</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section id="diensten">
+      <div class="container">
+        <div class="section-title hidden">
+          <h2>Diensten op maat voor elke groeifase</h2>
+          <p>Onze consultants combineren technische expertise met hands-on ervaring in operations, marketing en klantenservice. Zo bouwen we AI-oplossingen die aansluiten op jouw dagelijkse realiteit.</p>
+        </div>
+        <div class="grid grid-cols-3">
+          <article class="card hidden">
+            <h3>Strategie & Roadmap</h3>
+            <p>We analyseren processen, identificeren quick wins en bouwen een AI-roadmap die jouw doelen ondersteunt. Inclusief governance & compliance-advies.</p>
+          </article>
+          <article class="card hidden">
+            <h3>Automatisering & Integraties</h3>
+            <p>Koppel ChatGPT aan bestaande systemen, bouw slimme workflows en bied 24/7 selfservice aan klanten via chat of spraak.</p>
+          </article>
+          <article class="card hidden">
+            <h3>Training & Adoptie</h3>
+            <p>Zorg dat teams efficiënt met AI werken via trainingen, playbooks en persoonlijke coaching. Wij begeleiden de volledige adoptie.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="werkwijze">
+      <div class="container">
+        <div class="grid grid-cols-2" style="align-items:center;gap:3rem;">
+          <div class="hidden">
+            <div class="badge">Werkwijze</div>
+            <h2>In 4 stappen naar een toekomstbestendige AI-implementatie</h2>
+            <ul class="features-list">
+              <li><strong>1. Inspiratiesessie.</strong> We bepalen kansen, doelen en KPI's samen met jouw team.</li>
+              <li><strong>2. Prototype & validatie.</strong> Binnen twee weken testen we de belangrijkste use cases.</li>
+              <li><strong>3. Integratie.</strong> Na validatie bouwen we robuuste koppelingen met je bestaande systemen.</li>
+              <li><strong>4. Adoptie & groei.</strong> We trainen medewerkers, monitoren prestaties en optimaliseren continu.</li>
+            </ul>
+          </div>
+          <div class="card hidden" style="background:linear-gradient(135deg, rgba(67, 86, 255, 0.15), rgba(0, 209, 178, 0.15));">
+            <h3>Resultaten die we vaak zien:</h3>
+            <ul class="features-list">
+              <li>30-60% tijdsbesparing op repetitieve taken.</li>
+              <li>Verbeterde klanttevredenheid dankzij snelle respons.</li>
+              <li>Betere datakwaliteit door consistente input & analyse.</li>
+              <li>Nieuwe diensten en verdienmodellen gebaseerd op AI.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cases">
+      <div class="container">
+        <div class="section-title hidden">
+          <h2>Succesverhalen</h2>
+          <p>Een selectie van projecten die laten zien wat er mogelijk is wanneer AI naadloos integreert met je bedrijfsprocessen.</p>
+        </div>
+        <div class="testimonials">
+          <article class="testimonial hidden">
+            <p>"Binnen zes weken zette ChatGPT Expert een AI-servicedesk neer die 40% van onze tickets autonoom afhandelt. Onze medewerkers hebben nu tijd voor complexere vragen."</p>
+            <cite>Sarah van Dijk – Head of Customer Experience, NovaBank</cite>
+          </article>
+          <article class="testimonial hidden">
+            <p>"De marketingautomatisering die zij voor ons bouwden leverde een stijging van 28% in conversies op. Hun team spreekt zowel de taal van developers als marketeers."</p>
+            <cite>Joris Peters – CMO, GrowthForge</cite>
+          </article>
+          <article class="testimonial hidden">
+            <p>"Onze juridische afdeling werkt nu met een AI-assistent die contracten voorbereidt en checkt. Dit scheelt uren werk en we houden grip op de kwaliteit."</p>
+            <cite>Annelies Koster – Directeur Operatie, Lexio Legal</cite>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta-band hidden">
+          <h2>Klaar voor een AI-oplossing die écht werkt?</h2>
+          <p>Plan een strategiecall en ontdek binnen 30 minuten welke use cases de meeste impact hebben voor jouw organisatie.</p>
+          <a class="btn-primary" href="#contact">Ja, ik wil sparren</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="grid grid-cols-2" style="gap:3rem;align-items:start;">
+          <div class="hidden">
+            <div class="badge">Contact</div>
+            <h2>Vertel ons over jouw uitdaging</h2>
+            <p style="color:var(--color-muted);">Laat je gegevens achter en we nemen binnen één werkdag contact met je op. Liever direct plannen? Kies dan een moment in onze kalender.</p>
+            <p style="margin-top:1.5rem;color:var(--color-muted);">📍 Werkzaam in Nederland & Vlaanderen<br>🤝 Partnerships met Microsoft, Zapier & Make<br>🔐 AVG-compliant implementaties</p>
+          </div>
+          <form class="card hidden" id="contact-form">
+            <label for="name">Naam</label>
+            <input id="name" name="name" type="text" placeholder="Voor- en achternaam" required>
+
+            <label for="email">E-mailadres</label>
+            <input id="email" name="email" type="email" placeholder="naam@bedrijf.nl" required>
+
+            <label for="message">Waarmee kunnen we helpen?</label>
+            <textarea id="message" name="message" placeholder="Beschrijf kort jouw doelen of uitdagingen" required></textarea>
+
+            <button class="btn-primary" type="submit">Verstuur bericht</button>
+            <p id="form-status" role="status" style="margin:0;color:var(--color-muted);"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; <span id="year"></span> ChatGPT Expert. Alle rechten voorbehouden. | <a href="mailto:hallo@chatgptexpert.nl" style="color:inherit;">hallo@chatgptexpert.nl</a>
+    </div>
+  </footer>
+
+  <a class="floating-badge" href="mailto:hallo@chatgptexpert.nl">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.26 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+    </svg>
+    Plan een call
+  </a>
+
+  <script>
+    const nav = document.querySelector('header nav');
+    const toggle = document.querySelector('.mobile-toggle');
+    const sections = document.querySelectorAll('.hidden');
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    const year = document.getElementById('year');
+
+    // Mobiele navigatie
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Reveal-on-scroll animaties
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Contactformulier feedback
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
+        status.textContent = 'Vul alle velden in om je bericht te verzenden.';
+        status.style.color = '#d43f3a';
+        return;
+      }
+
+      status.textContent = 'Bedankt! We nemen snel contact met je op.';
+      status.style.color = 'var(--color-secondary)';
+      form.reset();
+    });
+
+    // Dynamisch jaartal
+    year.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
