@@ -3,19 +3,302 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hello world – arco</title>
+  <title>Spaarrente Spider & Vergelijker</title>
   <style>
-    html,body{height:100%;margin:0}
-    body{
-      background:#0b5bd3; /* blauw */
-      color:#fff;          /* witte tekst */
-      display:grid; place-items:center;
-      font:700 3rem/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      text-align:center;
+    :root {
+      --bg: #0b1220;
+      --panel: #121c30;
+      --muted: #8ea3c7;
+      --text: #e9f0ff;
+      --brand: #4ea1ff;
+      --good: #20d18f;
+      --border: #25324d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(circle at 10% 10%, #1c2f52 0%, var(--bg) 45%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.45;
+    }
+
+    .app {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .hero {
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      margin: 0 0 0.35rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .panel {
+      background: rgba(18, 28, 48, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-top: 0.9rem;
+      backdrop-filter: blur(3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+
+    button,
+    select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #1a2742;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 0.75rem 0.8rem;
+    }
+
+    button {
+      background: linear-gradient(135deg, #1f7cf4, var(--brand));
+      border: 0;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .status {
+      margin-top: 0.7rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      min-height: 1.2rem;
+    }
+
+    .results {
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 0.75rem;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.75rem;
+      background: #151f36;
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .card.top {
+      border-color: rgba(32, 209, 143, 0.7);
+      box-shadow: 0 0 0 1px rgba(32, 209, 143, 0.35) inset;
+    }
+
+    .provider {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.8rem;
+      font-weight: 700;
+    }
+
+    .rate {
+      color: var(--good);
+      font-size: 1.15rem;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .sparkline {
+      margin-top: 0.6rem;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      align-items: end;
+      gap: 3px;
+      height: 28px;
+    }
+
+    .sparkline span {
+      background: #2a3c61;
+      border-radius: 2px 2px 0 0;
+      min-height: 5px;
+    }
+
+    .legend {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <main>Hello world 👋</main>
+  <div class="app">
+    <header class="hero">
+      <h1>📱 Spaarrente Spider</h1>
+      <p class="subtitle">Mobiele vergelijker die rentes "spidert", sorteert en de beste deal bovenaan zet.</p>
+    </header>
+
+    <section class="panel">
+      <div class="controls">
+        <button id="crawlBtn">Spider nu rentes</button>
+        <select id="termSelect" aria-label="Looptijd filter">
+          <option value="all">Alle looptijden</option>
+          <option value="vrij">Vrij opneembaar</option>
+          <option value="1">1 jaar vast</option>
+          <option value="3">3 jaar vast</option>
+        </select>
+      </div>
+      <p id="status" class="status">Klaar om te scannen.</p>
+      <div id="results" class="results" aria-live="polite"></div>
+      <p class="legend">Demo-spider: in productie koppel je hier echte bankfeeds/APIs of server-side scraping.</p>
+    </section>
+  </div>
+
+  <script>
+    const SOURCES = [
+      {
+        name: "Bank Nova",
+        region: "NL",
+        latency: 430,
+        products: [
+          { term: "vrij", rate: 2.18 },
+          { term: "1", rate: 2.42 },
+          { term: "3", rate: 2.77 }
+        ]
+      },
+      {
+        name: "SpaarSterk",
+        region: "BE",
+        latency: 540,
+        products: [
+          { term: "vrij", rate: 2.35 },
+          { term: "1", rate: 2.55 },
+          { term: "3", rate: 2.68 }
+        ]
+      },
+      {
+        name: "EuroSafe",
+        region: "NL",
+        latency: 390,
+        products: [
+          { term: "vrij", rate: 2.11 },
+          { term: "1", rate: 2.63 },
+          { term: "3", rate: 2.89 }
+        ]
+      },
+      {
+        name: "Green Deposit",
+        region: "DE",
+        latency: 710,
+        products: [
+          { term: "vrij", rate: 2.49 },
+          { term: "1", rate: 2.48 },
+          { term: "3", rate: 2.73 }
+        ]
+      }
+    ];
+
+    const resultsEl = document.getElementById("results");
+    const statusEl = document.getElementById("status");
+    const crawlBtn = document.getElementById("crawlBtn");
+    const termSelect = document.getElementById("termSelect");
+
+    function formatTerm(term) {
+      return term === "vrij" ? "Vrij opneembaar" : `${term} jaar vast`;
+    }
+
+    function createSparkline(rate) {
+      const points = Array.from({ length: 8 }, (_, i) => Math.max(18, Math.round((rate * 10) + i * 2 + (Math.sin(i) + 1) * 6)));
+      return points.map((height) => `<span style="height:${height}px"></span>`).join("");
+    }
+
+    async function spiderRates() {
+      const selectedTerm = termSelect.value;
+      statusEl.textContent = "Spider bezig... bronnen ophalen";
+      resultsEl.innerHTML = "";
+
+      const crawled = [];
+
+      for (const source of SOURCES) {
+        // Simuleert netwerkverkeer/scrape-tijd.
+        await new Promise((resolve) => setTimeout(resolve, source.latency));
+
+        source.products.forEach((product) => {
+          if (selectedTerm === "all" || selectedTerm === product.term) {
+            crawled.push({
+              provider: source.name,
+              region: source.region,
+              term: product.term,
+              rate: product.rate,
+              latency: source.latency
+            });
+          }
+        });
+
+        statusEl.textContent = `Spider bezig... ${source.name} verwerkt`;
+      }
+
+      const sorted = crawled.sort((a, b) => b.rate - a.rate);
+      statusEl.textContent = `${sorted.length} renteproducten gevonden`;
+      render(sorted);
+    }
+
+    function render(items) {
+      if (!items.length) {
+        resultsEl.innerHTML = `<div class="card"><strong>Geen resultaten</strong><span class="meta">Probeer een andere filter.</span></div>`;
+        return;
+      }
+
+      resultsEl.innerHTML = items
+        .map((item, index) => {
+          return `
+            <article class="card ${index === 0 ? "top" : ""}">
+              <div class="provider">
+                <span>${index === 0 ? "🏆 " : ""}${item.provider}</span>
+                <span class="rate">${item.rate.toFixed(2)}%</span>
+              </div>
+              <div class="meta">
+                <span>${formatTerm(item.term)}</span>
+                <span>${item.region} • scan ${item.latency}ms</span>
+              </div>
+              <div class="sparkline" aria-hidden="true">${createSparkline(item.rate)}</div>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    crawlBtn.addEventListener("click", spiderRates);
+    termSelect.addEventListener("change", spiderRates);
+
+    spiderRates();
+  </script>
 </body>
 </html>
