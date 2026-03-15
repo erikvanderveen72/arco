@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Arco – Leren is leuk!</title>
+  <title>Jong geleerd – Leren is leuk!</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
   <style>
     /* ── Reset & Base ─────────────────────────────── */
@@ -889,6 +889,199 @@
       .xp-bar-wrapper { gap: 8px; }
     }
 
+    /* ── Explanation Box ─────────────────────────────── */
+    .explanation-box {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: rgba(108,92,231,0.1);
+      border: 1px solid rgba(108,92,231,0.25);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.5;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .explanation-box .explanation-label {
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Subject Progress Bar ─────────────────────── */
+    .card-progress {
+      margin-top: 12px;
+    }
+
+    .card-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .card-progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* ── Daily Challenge ──────────────────────────── */
+    .daily-challenge {
+      background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,206,201,0.15));
+      border: 1px solid rgba(108,92,231,0.3);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      margin-bottom: 32px;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .daily-challenge:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(108,92,231,0.2);
+    }
+
+    .daily-challenge-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .daily-challenge-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .daily-challenge-badge {
+      padding: 4px 12px;
+      background: rgba(253,203,110,0.2);
+      border: 1px solid rgba(253,203,110,0.4);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--warning);
+    }
+
+    .daily-challenge-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .daily-challenge.completed {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .daily-challenge.completed::after {
+      content: '✅ Voltooid!';
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    /* ── Difficulty Selector ──────────────────────── */
+    .difficulty-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: grid;
+      place-items: center;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .difficulty-modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .difficulty-modal-content {
+      background: var(--bg-dark);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      animation: levelUpBounce 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .difficulty-modal-content h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .difficulty-modal-content p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .difficulty-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .difficulty-btn {
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 2px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .difficulty-btn:hover {
+      background: var(--bg-card-hover);
+      transform: translateX(4px);
+    }
+
+    .difficulty-btn.easy { border-color: rgba(0,184,148,0.3); }
+    .difficulty-btn.easy:hover { border-color: var(--success); }
+    .difficulty-btn.medium { border-color: rgba(253,203,110,0.3); }
+    .difficulty-btn.medium:hover { border-color: var(--warning); }
+    .difficulty-btn.hard { border-color: rgba(225,112,85,0.3); }
+    .difficulty-btn.hard:hover { border-color: var(--danger); }
+
+    .difficulty-btn .diff-label { font-weight: 700; }
+    .difficulty-btn .diff-info { font-size: 0.8rem; color: var(--text-muted); }
+
     /* ── Utility ───────────────────────────────────── */
     .hidden { display: none !important; }
   </style>
@@ -902,7 +1095,7 @@
     <nav class="navbar">
       <div class="logo" onclick="showHome()">
         <div class="logo-icon">🎓</div>
-        <span>Arco</span>
+        <span>Jong geleerd</span>
       </div>
       <div class="nav-stats">
         <div class="stat-pill xp-pill">
@@ -937,13 +1130,16 @@
       <!-- HOME SCREEN -->
       <div class="screen active" id="homeScreen">
         <div class="hero">
-          <h1>Welkom bij <span class="gradient-text">Arco</span></h1>
+          <h1>Welkom bij <span class="gradient-text">Jong geleerd</span></h1>
           <p>Leer spelenderwijs met interactieve quizzen. Verdien XP, breek records en word een kei!</p>
         </div>
 
         <!-- Achievements -->
         <div class="section-title">🏆 Achievements</div>
         <div class="achievements-row" id="achievementsRow"></div>
+
+        <!-- Daily Challenge -->
+        <div id="dailyChallengeContainer"></div>
 
         <!-- Subject Cards -->
         <div class="section-title">📚 Kies een vak</div>
@@ -1016,6 +1212,28 @@
   <!-- Confetti Container -->
   <div class="confetti-container" id="confettiContainer"></div>
 
+  <!-- Difficulty Modal -->
+  <div class="difficulty-modal" id="difficultyModal">
+    <div class="difficulty-modal-content">
+      <h3 id="diffModalTitle">📚 Rekenen</h3>
+      <p>Kies een moeilijkheidsgraad</p>
+      <div class="difficulty-options">
+        <button class="difficulty-btn easy" onclick="selectDifficulty('easy')">
+          <span class="diff-label">🟢 Makkelijk</span>
+          <span class="diff-info">Basis vragen</span>
+        </button>
+        <button class="difficulty-btn medium" onclick="selectDifficulty('medium')">
+          <span class="diff-label">🟡 Gemiddeld</span>
+          <span class="diff-info">Iets uitdagender</span>
+        </button>
+        <button class="difficulty-btn hard" onclick="selectDifficulty('hard')">
+          <span class="diff-label">🔴 Moeilijk</span>
+          <span class="diff-info">Voor experts!</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ── State ─────────────────────────────────────────
     const state = {
@@ -1031,7 +1249,7 @@
 
     // Load from localStorage
     function loadState() {
-      const saved = localStorage.getItem('arco_state');
+      const saved = localStorage.getItem('jonggeleerd_state');
       if (saved) {
         const parsed = JSON.parse(saved);
         Object.assign(state, parsed);
@@ -1039,7 +1257,7 @@
     }
 
     function saveState() {
-      localStorage.setItem('arco_state', JSON.stringify(state));
+      localStorage.setItem('jonggeleerd_state', JSON.stringify(state));
     }
 
     // ── XP & Leveling ────────────────────────────────
@@ -1082,16 +1300,16 @@
         difficulty: 'easy',
         color: '#6c5ce7',
         questions: [
-          { q: 'Wat is 12 × 8?', answers: ['96', '84', '108', '92'], correct: 0 },
-          { q: 'Wat is 144 ÷ 12?', answers: ['14', '12', '11', '13'], correct: 1 },
-          { q: 'Wat is 7 × 9?', answers: ['56', '72', '63', '67'], correct: 2 },
-          { q: 'Wat is 256 + 189?', answers: ['435', '445', '455', '425'], correct: 1 },
-          { q: 'Wat is 15% van 200?', answers: ['25', '35', '30', '20'], correct: 2 },
-          { q: 'Wat is √49?', answers: ['6', '8', '9', '7'], correct: 3 },
-          { q: 'Hoeveel is 3³?', answers: ['9', '27', '12', '81'], correct: 1 },
-          { q: 'Wat is 1000 - 387?', answers: ['623', '617', '613', '603'], correct: 2 },
-          { q: 'Wat is ½ + ¼?', answers: ['¾', '½', '⅔', '⅓'], correct: 0 },
-          { q: 'Hoeveel seconden heeft een uur?', answers: ['3000', '3600', '6000', '1800'], correct: 1 }
+          { q: 'Wat is 12 × 8?', answers: ['96', '84', '108', '92'], correct: 0, explanation: '12 × 8 = 96. Tip: 12 × 8 = (10 × 8) + (2 × 8) = 80 + 16 = 96.' },
+          { q: 'Wat is 144 ÷ 12?', answers: ['14', '12', '11', '13'], correct: 1, explanation: '144 ÷ 12 = 12. Dit is ook 12², want 12 × 12 = 144.' },
+          { q: 'Wat is 7 × 9?', answers: ['56', '72', '63', '67'], correct: 2, explanation: '7 × 9 = 63. Ezelsbruggetje: 7 × 9 = 63 (als je 7, 8, 9 zegt: 7 × 8 = 56, 7 × 9 = 63).' },
+          { q: 'Wat is 256 + 189?', answers: ['435', '445', '455', '425'], correct: 1, explanation: '256 + 189 = 445. Tel op: 6+9=15 (schrijf 5, onthoud 1), 5+8+1=14, 2+1+1=4.' },
+          { q: 'Wat is 15% van 200?', answers: ['25', '35', '30', '20'], correct: 2, explanation: '15% van 200 = 0,15 × 200 = 30. Tip: 10% = 20, 5% = 10, samen 30.' },
+          { q: 'Wat is √49?', answers: ['6', '8', '9', '7'], correct: 3, explanation: '√49 = 7, want 7 × 7 = 49.' },
+          { q: 'Hoeveel is 3³?', answers: ['9', '27', '12', '81'], correct: 1, explanation: '3³ = 3 × 3 × 3 = 27. Let op: 3² = 9, maar 3³ = 27.' },
+          { q: 'Wat is 1000 - 387?', answers: ['623', '617', '613', '603'], correct: 2, explanation: '1000 - 387 = 613. Tip: 1000 - 400 = 600, dan +13 = 613.' },
+          { q: 'Wat is ½ + ¼?', answers: ['¾', '½', '⅔', '⅓'], correct: 0, explanation: '½ + ¼ = 2/4 + 1/4 = 3/4 = ¾. Maak de noemers eerst gelijk!' },
+          { q: 'Hoeveel seconden heeft een uur?', answers: ['3000', '3600', '6000', '1800'], correct: 1, explanation: '1 uur = 60 minuten × 60 seconden = 3600 seconden.' }
         ]
       },
       {
@@ -1102,16 +1320,16 @@
         difficulty: 'medium',
         color: '#00cec9',
         questions: [
-          { q: 'Welk woord is fout geschreven?', answers: ['Gezellig', 'Seizoen', 'Defnitief', 'Eigenlijk'], correct: 2 },
-          { q: 'Wat is het meervoud van "museum"?', answers: ['Museums', 'Musea', 'Museumen', 'Musees'], correct: 1 },
-          { q: 'Welk woord is een bijvoeglijk naamwoord?', answers: ['Rennen', 'Snel', 'Huis', 'Zij'], correct: 1 },
-          { q: 'Wat is de verleden tijd van "lopen"?', answers: ['Loopte', 'Liep', 'Gelopen', 'Lopend'], correct: 1 },
-          { q: 'Welke zin is correct?', answers: ['Hun hebben dat gedaan', 'Zij hebben dat gedaan', 'Hen hebben dat gedaan', 'Haar hebben dat gedaan'], correct: 1 },
-          { q: 'Wat is een synoniem voor "blij"?', answers: ['Verdrietig', 'Boos', 'Vrolijk', 'Moe'], correct: 2 },
-          { q: 'Hoeveel lettergrepen heeft "bibliotheek"?', answers: ['3', '4', '5', '2'], correct: 1 },
-          { q: 'Wat is het tegenovergestelde van "dapper"?', answers: ['Sterk', 'Laf', 'Groot', 'Slim'], correct: 1 },
-          { q: 'Welk woord heeft een dubbele medeklinker nodig?', answers: ['Bomen', 'Bommen', 'Bomen', 'Boomen'], correct: 1 },
-          { q: 'Wat is een zelfstandig naamwoord?', answers: ['Lopen', 'Mooi', 'Tafel', 'Snel'], correct: 2 }
+          { q: 'Welk woord is fout geschreven?', answers: ['Gezellig', 'Seizoen', 'Defnitief', 'Eigenlijk'], correct: 2, explanation: 'Het juiste woord is "definitief" (met een i na de "def"). Veel voorkomende spelfout!' },
+          { q: 'Wat is het meervoud van "museum"?', answers: ['Museums', 'Musea', 'Museumen', 'Musees'], correct: 1, explanation: '"Museum" komt uit het Latijn en het meervoud is "musea". Net als: stadium → stadia.' },
+          { q: 'Welk woord is een bijvoeglijk naamwoord?', answers: ['Rennen', 'Snel', 'Huis', 'Zij'], correct: 1, explanation: '"Snel" beschrijft hoe iets is en is dus een bijvoeglijk naamwoord. "Rennen" is een werkwoord, "huis" een zelfstandig naamwoord.' },
+          { q: 'Wat is de verleden tijd van "lopen"?', answers: ['Loopte', 'Liep', 'Gelopen', 'Lopend'], correct: 1, explanation: '"Lopen" is een onregelmatig werkwoord: ik loop, ik liep, ik heb gelopen. "Gelopen" is het voltooid deelwoord.' },
+          { q: 'Welke zin is correct?', answers: ['Hun hebben dat gedaan', 'Zij hebben dat gedaan', 'Hen hebben dat gedaan', 'Haar hebben dat gedaan'], correct: 1, explanation: '"Zij" is het onderwerp van de zin. "Hun" en "hen" zijn lijdend/meewerkend voorwerp.' },
+          { q: 'Wat is een synoniem voor "blij"?', answers: ['Verdrietig', 'Boos', 'Vrolijk', 'Moe'], correct: 2, explanation: 'Een synoniem is een woord met dezelfde betekenis. "Vrolijk" betekent hetzelfde als "blij".' },
+          { q: 'Hoeveel lettergrepen heeft "bibliotheek"?', answers: ['3', '4', '5', '2'], correct: 1, explanation: 'Bi-bli-o-theek = 4 lettergrepen. Klap het woord maar mee!' },
+          { q: 'Wat is het tegenovergestelde van "dapper"?', answers: ['Sterk', 'Laf', 'Groot', 'Slim'], correct: 1, explanation: '"Laf" is het tegenovergestelde (antoniem) van "dapper". Beide woorden gaan over moed.' },
+          { q: 'Welk woord heeft een dubbele medeklinker nodig?', answers: ['Bomen', 'Bommen', 'Bomen', 'Boomen'], correct: 1, explanation: '"Bommen" heeft een dubbele m zodat de o kort klinkt. "Bomen" (met één m) heeft een lange o.' },
+          { q: 'Wat is een zelfstandig naamwoord?', answers: ['Lopen', 'Mooi', 'Tafel', 'Snel'], correct: 2, explanation: '"Tafel" is een zelfstandig naamwoord (je kunt er "de" of "het" voor zetten). "Lopen" = werkwoord, "mooi"/"snel" = bijvoeglijk naamwoord/bijwoord.' }
         ]
       },
       {
@@ -1122,16 +1340,16 @@
         difficulty: 'medium',
         color: '#00b894',
         questions: [
-          { q: 'Wat is de hoofdstad van Australië?', answers: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'], correct: 2 },
-          { q: 'Welke rivier stroomt door Londen?', answers: ['Seine', 'Theems', 'Donau', 'Rijn'], correct: 1 },
-          { q: 'In welk werelddeel ligt Brazilië?', answers: ['Afrika', 'Azië', 'Europa', 'Zuid-Amerika'], correct: 3 },
-          { q: 'Wat is het grootste land ter wereld?', answers: ['China', 'Canada', 'Rusland', 'VS'], correct: 2 },
-          { q: 'Hoeveel provincies heeft Nederland?', answers: ['10', '11', '12', '13'], correct: 2 },
-          { q: 'Wat is de langste rivier van Europa?', answers: ['Donau', 'Rijn', 'Wolga', 'Elbe'], correct: 2 },
-          { q: 'Welke oceaan ligt tussen Europa en Amerika?', answers: ['Stille Oceaan', 'Indische Oceaan', 'Atlantische Oceaan', 'Noordelijke IJszee'], correct: 2 },
-          { q: 'Wat is de hoofdstad van Canada?', answers: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa'], correct: 3 },
-          { q: 'Op welk continent ligt de Sahara?', answers: ['Azië', 'Afrika', 'Zuid-Amerika', 'Australië'], correct: 1 },
-          { q: 'Welk land heeft de meeste inwoners?', answers: ['VS', 'India', 'China', 'Indonesië'], correct: 1 }
+          { q: 'Wat is de hoofdstad van Australië?', answers: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'], correct: 2, explanation: 'Canberra is de hoofdstad, niet Sydney! Sydney is wel de grootste stad van Australië.' },
+          { q: 'Welke rivier stroomt door Londen?', answers: ['Seine', 'Theems', 'Donau', 'Rijn'], correct: 1, explanation: 'De Theems (Thames) stroomt door Londen. De Seine stroomt door Parijs.' },
+          { q: 'In welk werelddeel ligt Brazilië?', answers: ['Afrika', 'Azië', 'Europa', 'Zuid-Amerika'], correct: 3, explanation: 'Brazilië is het grootste land van Zuid-Amerika. Ze spreken er Portugees.' },
+          { q: 'Wat is het grootste land ter wereld?', answers: ['China', 'Canada', 'Rusland', 'VS'], correct: 2, explanation: 'Rusland is met 17,1 miljoen km² verreweg het grootste land. Canada (2e) is bijna half zo groot.' },
+          { q: 'Hoeveel provincies heeft Nederland?', answers: ['10', '11', '12', '13'], correct: 2, explanation: 'Nederland heeft 12 provincies, van Groningen in het noorden tot Limburg in het zuiden.' },
+          { q: 'Wat is de langste rivier van Europa?', answers: ['Donau', 'Rijn', 'Wolga', 'Elbe'], correct: 2, explanation: 'De Wolga (3.530 km) in Rusland is de langste rivier van Europa. De Donau is de op-één-na langste.' },
+          { q: 'Welke oceaan ligt tussen Europa en Amerika?', answers: ['Stille Oceaan', 'Indische Oceaan', 'Atlantische Oceaan', 'Noordelijke IJszee'], correct: 2, explanation: 'De Atlantische Oceaan scheidt Europa/Afrika van Noord-/Zuid-Amerika.' },
+          { q: 'Wat is de hoofdstad van Canada?', answers: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa'], correct: 3, explanation: 'Ottawa is de hoofdstad van Canada. Toronto is de grootste stad, maar niet de hoofdstad.' },
+          { q: 'Op welk continent ligt de Sahara?', answers: ['Azië', 'Afrika', 'Zuid-Amerika', 'Australië'], correct: 1, explanation: 'De Sahara ligt in Noord-Afrika en is de grootste hete woestijn ter wereld.' },
+          { q: 'Welk land heeft de meeste inwoners?', answers: ['VS', 'India', 'China', 'Indonesië'], correct: 1, explanation: 'India heeft sinds 2023 de meeste inwoners (ruim 1,4 miljard), meer dan China.' }
         ]
       },
       {
@@ -1142,16 +1360,16 @@
         difficulty: 'hard',
         color: '#fd79a8',
         questions: [
-          { q: 'In welk jaar begon de Tweede Wereldoorlog?', answers: ['1937', '1938', '1939', '1940'], correct: 2 },
-          { q: 'Wie was de eerste mens op de maan?', answers: ['Buzz Aldrin', 'Neil Armstrong', 'Yuri Gagarin', 'John Glenn'], correct: 1 },
-          { q: 'Wanneer viel de Berlijnse Muur?', answers: ['1987', '1988', '1989', '1991'], correct: 2 },
-          { q: 'Wie schilderde de Mona Lisa?', answers: ['Michelangelo', 'Rembrandt', 'Van Gogh', 'Leonardo da Vinci'], correct: 3 },
-          { q: 'Welk volk bouwde de piramides?', answers: ['Grieken', 'Romeinen', 'Egyptenaren', 'Perzen'], correct: 2 },
-          { q: 'In welk jaar werd Nederland bevrijd?', answers: ['1943', '1944', '1945', '1946'], correct: 2 },
-          { q: 'Wie was Willem van Oranje?', answers: ['Een schilder', 'Vader des Vaderlands', 'Een ontdekkingsreiziger', 'Een wetenschapper'], correct: 1 },
-          { q: 'Wanneer was de Gouden Eeuw?', answers: ['15e eeuw', '16e eeuw', '17e eeuw', '18e eeuw'], correct: 2 },
-          { q: 'Welk imperium had het Colosseum?', answers: ['Grieks', 'Perzisch', 'Romeins', 'Ottomaans'], correct: 2 },
-          { q: 'Wanneer werd de VOC opgericht?', answers: ['1502', '1602', '1702', '1802'], correct: 1 }
+          { q: 'In welk jaar begon de Tweede Wereldoorlog?', answers: ['1937', '1938', '1939', '1940'], correct: 2, explanation: 'WO2 begon op 1 september 1939 toen Duitsland Polen binnenviel. Nederland werd in 1940 bezet.' },
+          { q: 'Wie was de eerste mens op de maan?', answers: ['Buzz Aldrin', 'Neil Armstrong', 'Yuri Gagarin', 'John Glenn'], correct: 1, explanation: 'Neil Armstrong zette op 20 juli 1969 als eerste mens voet op de maan. Buzz Aldrin was de tweede.' },
+          { q: 'Wanneer viel de Berlijnse Muur?', answers: ['1987', '1988', '1989', '1991'], correct: 2, explanation: 'De Berlijnse Muur viel op 9 november 1989. Dit leidde tot de hereniging van Duitsland in 1990.' },
+          { q: 'Wie schilderde de Mona Lisa?', answers: ['Michelangelo', 'Rembrandt', 'Van Gogh', 'Leonardo da Vinci'], correct: 3, explanation: 'Leonardo da Vinci schilderde de Mona Lisa rond 1503-1519. Het hangt in het Louvre in Parijs.' },
+          { q: 'Welk volk bouwde de piramides?', answers: ['Grieken', 'Romeinen', 'Egyptenaren', 'Perzen'], correct: 2, explanation: 'De oude Egyptenaren bouwden de piramides als grafmonumenten voor hun farao\'s, meer dan 4000 jaar geleden.' },
+          { q: 'In welk jaar werd Nederland bevrijd?', answers: ['1943', '1944', '1945', '1946'], correct: 2, explanation: 'Nederland werd in mei 1945 bevrijd. We vieren Bevrijdingsdag elk jaar op 5 mei.' },
+          { q: 'Wie was Willem van Oranje?', answers: ['Een schilder', 'Vader des Vaderlands', 'Een ontdekkingsreiziger', 'Een wetenschapper'], correct: 1, explanation: 'Willem van Oranje (1533-1584) leidde de opstand tegen Spanje en wordt daarom de Vader des Vaderlands genoemd.' },
+          { q: 'Wanneer was de Gouden Eeuw?', answers: ['15e eeuw', '16e eeuw', '17e eeuw', '18e eeuw'], correct: 2, explanation: 'De Gouden Eeuw was in de 17e eeuw (1600-1700). Nederland was toen een wereldmacht in handel, kunst en wetenschap.' },
+          { q: 'Welk imperium had het Colosseum?', answers: ['Grieks', 'Perzisch', 'Romeins', 'Ottomaans'], correct: 2, explanation: 'Het Colosseum in Rome werd gebouwd door de Romeinen (70-80 na Christus). Er konden 50.000 toeschouwers in.' },
+          { q: 'Wanneer werd de VOC opgericht?', answers: ['1502', '1602', '1702', '1802'], correct: 1, explanation: 'De VOC (Verenigde Oost-Indische Compagnie) werd in 1602 opgericht en was de eerste multinational ter wereld.' }
         ]
       },
       {
@@ -1162,16 +1380,16 @@
         difficulty: 'medium',
         color: '#e17055',
         questions: [
-          { q: 'Hoeveel planeten heeft ons zonnestelsel?', answers: ['7', '8', '9', '10'], correct: 1 },
-          { q: 'Wat is het grootste orgaan van het lichaam?', answers: ['Lever', 'Hart', 'Huid', 'Longen'], correct: 2 },
-          { q: 'Wat is het chemisch symbool voor water?', answers: ['HO', 'H2O', 'O2H', 'H3O'], correct: 1 },
-          { q: 'Hoeveel botten heeft een volwassen mens?', answers: ['186', '196', '206', '216'], correct: 2 },
-          { q: 'Welk gas ademen planten in?', answers: ['Zuurstof', 'Stikstof', 'CO2', 'Waterstof'], correct: 2 },
-          { q: 'Wat is de snelheid van het licht (afgerond)?', answers: ['100.000 km/s', '200.000 km/s', '300.000 km/s', '400.000 km/s'], correct: 2 },
-          { q: 'Welk dier is het grootste ter wereld?', answers: ['Olifant', 'Blauwe vinvis', 'Giraffe', 'Walvishaai'], correct: 1 },
-          { q: 'Hoeveel chromosomen heeft een mens?', answers: ['44', '46', '48', '42'], correct: 1 },
-          { q: 'Waarvan is diamant gemaakt?', answers: ['Silicium', 'Koolstof', 'IJzer', 'Kristal'], correct: 1 },
-          { q: 'Wat is de dichtstbijzijnde ster bij de aarde?', answers: ['Sirius', 'Proxima Centauri', 'De zon', 'Polaris'], correct: 2 }
+          { q: 'Hoeveel planeten heeft ons zonnestelsel?', answers: ['7', '8', '9', '10'], correct: 1, explanation: 'Ons zonnestelsel heeft 8 planeten. Pluto werd in 2006 teruggebracht tot "dwergplaneet".' },
+          { q: 'Wat is het grootste orgaan van het lichaam?', answers: ['Lever', 'Hart', 'Huid', 'Longen'], correct: 2, explanation: 'De huid is het grootste orgaan en weegt bij volwassenen gemiddeld 3-4 kg!' },
+          { q: 'Wat is het chemisch symbool voor water?', answers: ['HO', 'H2O', 'O2H', 'H3O'], correct: 1, explanation: 'H2O = 2 waterstofatomen (H) en 1 zuurstofatoom (O) vormen samen een watermolecuul.' },
+          { q: 'Hoeveel botten heeft een volwassen mens?', answers: ['186', '196', '206', '216'], correct: 2, explanation: 'Een volwassene heeft 206 botten. Baby\'s hebben er meer (ongeveer 270), die later samengroeien.' },
+          { q: 'Welk gas ademen planten in?', answers: ['Zuurstof', 'Stikstof', 'CO2', 'Waterstof'], correct: 2, explanation: 'Planten nemen CO2 (koolstofdioxide) op en maken daar met zonlicht zuurstof en suikers van. Dit heet fotosynthese.' },
+          { q: 'Wat is de snelheid van het licht (afgerond)?', answers: ['100.000 km/s', '200.000 km/s', '300.000 km/s', '400.000 km/s'], correct: 2, explanation: 'Licht reist met ongeveer 300.000 km/s. Het licht van de zon doet er 8 minuten over om de aarde te bereiken.' },
+          { q: 'Welk dier is het grootste ter wereld?', answers: ['Olifant', 'Blauwe vinvis', 'Giraffe', 'Walvishaai'], correct: 1, explanation: 'De blauwe vinvis kan tot 30 meter lang worden en 150 ton wegen — groter dan welke dinosaurus ook!' },
+          { q: 'Hoeveel chromosomen heeft een mens?', answers: ['44', '46', '48', '42'], correct: 1, explanation: 'Een mens heeft 46 chromosomen (23 paar). De helft komt van je vader, de helft van je moeder.' },
+          { q: 'Waarvan is diamant gemaakt?', answers: ['Silicium', 'Koolstof', 'IJzer', 'Kristal'], correct: 1, explanation: 'Diamant is puur koolstof, net als grafiet (potloodvulling). Het verschil zit in de kristalstructuur.' },
+          { q: 'Wat is de dichtstbijzijnde ster bij de aarde?', answers: ['Sirius', 'Proxima Centauri', 'De zon', 'Polaris'], correct: 2, explanation: 'De zon is technisch gezien het dichtste, maar de zon telt als "onze ster". De dichtstbijzijnde andere ster is Proxima Centauri (4,24 lichtjaar).' }
         ]
       },
       {
@@ -1182,16 +1400,16 @@
         difficulty: 'easy',
         color: '#0984e3',
         questions: [
-          { q: 'Wat betekent "butterfly"?', answers: ['Boterham', 'Vlinder', 'Boter', 'Vlieg'], correct: 1 },
-          { q: 'Hoe zeg je "schoen" in het Engels?', answers: ['Shoe', 'Show', 'Shop', 'Ship'], correct: 0 },
-          { q: 'Wat is de vertaling van "beautiful"?', answers: ['Lelijk', 'Groot', 'Mooi', 'Klein'], correct: 2 },
-          { q: 'Welk woord betekent "fiets"?', answers: ['Car', 'Bus', 'Bicycle', 'Truck'], correct: 2 },
-          { q: 'Wat betekent "knowledge"?', answers: ['Knie', 'Kennis', 'Knoop', 'Keuken'], correct: 1 },
-          { q: '"She ___ to school every day"', answers: ['go', 'going', 'goes', 'gone'], correct: 2 },
-          { q: 'Wat is het meervoud van "child"?', answers: ['Childs', 'Children', 'Childes', 'Childeren'], correct: 1 },
-          { q: 'Wat betekent "to achieve"?', answers: ['Bereiken', 'Verlaten', 'Archiveren', 'Ontvangen'], correct: 0 },
-          { q: 'Welke zin is correct?', answers: ['I am agree', 'I agree', 'I am agreed', 'I do agree me'], correct: 1 },
-          { q: 'Wat is de past tense van "swim"?', answers: ['Swimmed', 'Swam', 'Swum', 'Swimming'], correct: 1 }
+          { q: 'Wat betekent "butterfly"?', answers: ['Boterham', 'Vlinder', 'Boter', 'Vlieg'], correct: 1, explanation: '"Butterfly" = vlinder. Grappig: het woord bevat "butter" (boter) en "fly" (vliegen), maar betekent vlinder!' },
+          { q: 'Hoe zeg je "schoen" in het Engels?', answers: ['Shoe', 'Show', 'Shop', 'Ship'], correct: 0, explanation: '"Shoe" = schoen. Let op de uitspraak: "shoe" klinkt als "sjoe".' },
+          { q: 'Wat is de vertaling van "beautiful"?', answers: ['Lelijk', 'Groot', 'Mooi', 'Klein'], correct: 2, explanation: '"Beautiful" = mooi/prachtig. "Beauty" is het zelfstandig naamwoord (schoonheid).' },
+          { q: 'Welk woord betekent "fiets"?', answers: ['Car', 'Bus', 'Bicycle', 'Truck'], correct: 2, explanation: '"Bicycle" = fiets. "Bi" = twee, "cycle" = wiel. Informeel zeg je ook gewoon "bike".' },
+          { q: 'Wat betekent "knowledge"?', answers: ['Knie', 'Kennis', 'Knoop', 'Keuken'], correct: 1, explanation: '"Knowledge" = kennis. De "k" aan het begin is stom (wordt niet uitgesproken), net als bij "knee" (knie).' },
+          { q: '"She ___ to school every day"', answers: ['go', 'going', 'goes', 'gone'], correct: 2, explanation: 'Bij "she/he/it" krijgt het werkwoord een -s of -es: she goes. Dit is de derde persoon enkelvoud.' },
+          { q: 'Wat is het meervoud van "child"?', answers: ['Childs', 'Children', 'Childes', 'Childeren'], correct: 1, explanation: '"Child" → "children" is een onregelmatig meervoud. Net als: man → men, woman → women.' },
+          { q: 'Wat betekent "to achieve"?', answers: ['Bereiken', 'Verlaten', 'Archiveren', 'Ontvangen'], correct: 0, explanation: '"To achieve" = bereiken/behalen. Een "achievement" is een prestatie of verwezenlijking.' },
+          { q: 'Welke zin is correct?', answers: ['I am agree', 'I agree', 'I am agreed', 'I do agree me'], correct: 1, explanation: '"I agree" is correct. "Agree" is een gewoon werkwoord en heeft geen "am" nodig. Vergelijk: "I think", niet "I am think".' },
+          { q: 'Wat is de past tense van "swim"?', answers: ['Swimmed', 'Swam', 'Swum', 'Swimming'], correct: 1, explanation: '"Swim" is onregelmatig: swim → swam → swum. "Swum" is het voltooid deelwoord (I have swum).' }
         ]
       }
     ];
@@ -1362,20 +1580,31 @@
         showFeedback(false, `Het juiste antwoord was: ${q.answers[q.correct]}`);
       }
 
+      // Show explanation
+      if (q.explanation) {
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = 'explanation-box';
+        explanationDiv.innerHTML = `<div class="explanation-label">💡 Uitleg</div><div>${q.explanation}</div>`;
+        document.getElementById('answersGrid').after(explanationDiv);
+      }
+
       state.totalAnswered++;
       updateUI();
       checkAchievements();
       saveState();
 
-      // Next question after delay
+      // Next question after delay (longer when wrong to read explanation)
+      const delay = isCorrect ? 1800 : 3500;
       setTimeout(() => {
+        const expl = document.querySelector('.explanation-box');
+        if (expl) expl.remove();
         currentIndex++;
         if (currentIndex < currentQuestions.length) {
           renderQuestion();
         } else {
           showResults();
         }
-      }, 1800);
+      }, delay);
     }
 
     function showResults() {
