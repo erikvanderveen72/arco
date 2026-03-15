@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Arco – Leren is leuk!</title>
+  <title>Jong geleerd – Leren is leuk!</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
   <style>
     /* ── Reset & Base ─────────────────────────────── */
@@ -902,7 +902,7 @@
     <nav class="navbar">
       <div class="logo" onclick="showHome()">
         <div class="logo-icon">🎓</div>
-        <span>Arco</span>
+        <span>Jong geleerd</span>
       </div>
       <div class="nav-stats">
         <div class="stat-pill xp-pill">
@@ -937,7 +937,7 @@
       <!-- HOME SCREEN -->
       <div class="screen active" id="homeScreen">
         <div class="hero">
-          <h1>Welkom bij <span class="gradient-text">Arco</span></h1>
+          <h1>Welkom bij <span class="gradient-text">Jong geleerd</span></h1>
           <p>Leer spelenderwijs met interactieve quizzen. Verdien XP, breek records en word een kei!</p>
         </div>
 
@@ -1031,7 +1031,7 @@
 
     // Load from localStorage
     function loadState() {
-      const saved = localStorage.getItem('arco_state');
+      const saved = localStorage.getItem('jonggeleerd_state');
       if (saved) {
         const parsed = JSON.parse(saved);
         Object.assign(state, parsed);
@@ -1039,7 +1039,7 @@
     }
 
     function saveState() {
-      localStorage.setItem('arco_state', JSON.stringify(state));
+      localStorage.setItem('jonggeleerd_state', JSON.stringify(state));
     }
 
     // ── XP & Leveling ────────────────────────────────
